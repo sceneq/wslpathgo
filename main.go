@@ -40,9 +40,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	piped := fi.Mode()&os.ModeNamedPipe != 0
 
-	if !piped {
+	stdin := (fi.Mode()&os.ModeNamedPipe != 0) || (fi.Mode()&os.ModeCharDevice == 0)
+
+	if !stdin {
 		for _, input := range flag.Args() {
 			var result string
 			switch {
